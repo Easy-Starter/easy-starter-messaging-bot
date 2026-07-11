@@ -1,0 +1,85 @@
+[project]
+name = "easy-starter-messaging-bot"
+version = "0.1.0"
+description = "Multi-channel bot template for Telegram, Bale, WhatsApp, and other messaging platforms using adapter-based architecture"
+readme = "README.md"
+authors = [
+    { name = "Fonij2002", email = "fonij2002@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1,<2",
+    "fastapi>=0.100,<1",
+    "httpx>=0.27,<1",
+    "psycopg[binary,pool]>=3,<4",
+    "pydantic-settings>=2,<3",
+    "redis>=6,<7",
+    "sqlalchemy[asyncio]>=2,<3",
+    "structlog>=25,<26",
+    "taskiq>=0.11,<1",
+    "taskiq-redis>=1,<2",
+    "uvicorn[standard]>=0.30,<1",
+]
+
+[project.scripts]
+easy-starter-messaging-bot = "easy_starter_messaging_bot:main"
+
+[project.optional-dependencies]
+telegram = [
+    "aiogram>=3,<4",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.23,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.2.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "pytest-cov>=7.1.0",
+    "respx>=0.23.1",
+    "ruff>=0.15.21",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "B",
+    "UP",
+    "SIM",
+    "RUF",
+    "ASYNC",
+]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+]
+
+[tool.coverage.run]
+source = ["easy_starter_messenger_bot"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
